@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Find wifi networks</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+</head>
+<body>
+
+<h1>Search for NY Hotspot</h1>
+<p></p>
+<form>
+	<label for="findWifi">Enter a NY Zip code to find the nearest wifi hotspots:</label>
+	<input id="searchbox" type="text" name="findWifi">
+	<input type="button" value="Search Zip Code" onclick="doSearch()">
+</form>
+<div id="resultsdiv"></div>
+</body>
+
+</html>
+
+<script>
+function doSearch(){
+
+// Do the search
+
+
+var searchbx = document.getElementById("searchbox"); // get the searchbox
+
+var searchterm = searchbx.value; // get the search term
+
+var results = document.getElementById("resultsdiv");
+
+
+// if it's blank, give up
+
+if (searchterm == ""){
+
+alert("Enter a search term"); // put up an explanation for the user
+
+return; // jump out of this funciton
+
+}
+
+// Do the API call
+
+$.ajax({
+
+        url: 'https://data.cityofnewyork.us/resource/24t3-xqyv.json?zip=' + searchterm,
+
+        type: 'GET',
+
+        success: function(r){
+
+        $('#resultsdiv').append(JSON.stringify(r));
+
+        },
+
+        error: function(e){
+
+            alert("Something went wrong: " + e);
+
+        }
+
+
+});
+
+}
+
+$(document).ready(function() {
+
+});
+
+</script>
